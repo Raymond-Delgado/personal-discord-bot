@@ -17,4 +17,13 @@ bot = commands.Bot(command_prefix='mw_', intents = intents)
 async def on_ready():
   print(f'{bot.user.name} is online!')
 
+@bot.event
+async def on_member_join(member):
+  welcome_ch_id = 1381353794859827211
+  welcome_ch = bot.get_channel(welcome_ch_id)
+  if welcome_ch:
+    await welcome_ch.send(f"{member.mention}, welcome to the LT Workshop!")
+  else:
+    print(f'Something is wrong! {welcome_ch_id} is not found!')
+
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)
