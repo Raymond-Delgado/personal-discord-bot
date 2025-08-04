@@ -60,9 +60,7 @@ async def on_ready():
 
 @bot.event
 async def on_member_join(member):
-  print(member.guild)
   server_index, new_member_ch_id = load_channel_id(member.guild, "new_member_ch")
-  print(server_index)
   new_mem = bot.get_channel(new_member_ch_id)
   if new_mem:
     welcome_message = load_message(server_index, 'welcome')
