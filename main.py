@@ -17,7 +17,7 @@ intents.members = True
 
 bot = commands.Bot(command_prefix='mw_', intents = intents)
 
-def load_channel_id(requested_guild_id, requested_channel_id):
+def load_guild_index(requested_guild_id):
   g_index = 0
   try:
     with open('server_ids.json', 'r') as read_file:
@@ -25,21 +25,36 @@ def load_channel_id(requested_guild_id, requested_channel_id):
       for index in ids_data:
         if requested_guild_id == index["guild_id"]:
           g_index = index
-      return(g_index, ids_data[g_index]["channels"][requested_channel_id])
+      return g_index
   except FileNotFoundError:
     print('server_ids.json not found')
     return None
   except json.JSONDecodeError:
     print('Error decoding JSON from server_ids.json')
 
-def load_message(guild_index ,message_type):
-  g_index = guild_index
+def load_channel_id(requested_guild_id, requested_channel_id):
+  g_index = load_guild_index(requested_guild_id)
+  try:
+    with open('server_ids.json', 'r') as read_file:
+      ids_data = json.load(read_file)
+      return g_index, ids_data[g_index]["channels"][requested_channel_id]
+  except FileNotFoundError:
+    print('server_ids.json not found')
+    return None
+  except json.JSONDecodeError:
+    print('Error decoding JSON from server_ids.json')
+
+def load_message(requested_guild_id ,message_type):
+  g_index = load_guild_index(requested_guild_id)
   requested_message = ''
   try:
     with open('server_ids.json', 'r') as read_file:
       ids_data = json.load(read_file)
       if message_type == "welcome":
         requested_message = ids_data[g_index]["messages"]["welecome_msg"]
+        return requested_message
+      elif message_type == 'bw_warning':
+        requested_message = ids_data[g_index]["messages"]["bw_warning_msg"]
         return requested_message
   except FileNotFoundError:
     print('server_ids.json not found')
@@ -67,5 +82,18 @@ async def on_member_join(member):
     await new_mem.send(f'{member.mention}{welcome_message}')
   else:
     print(f'Something is wrong! {new_member_ch_id} is not found!')
+  
+'''
+@bot.event
+async def on_message(message):
+  if message.author == bot.user:
+    return
+  if 'test_bw' in message.content.lower():
+    bw_warning_msg = load_message(message.guild, 'bw_warning')
+    await message.delete()
+    await message.channel.send(f'{message.author.mention}, {bw_warning_msg}')
+  await bot.process_commands(message)
+'''
+
 
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)
