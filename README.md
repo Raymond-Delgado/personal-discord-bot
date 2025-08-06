@@ -35,5 +35,12 @@ Currently in active development and being tested within a dedicated "third space
 ## Quick Facts about my bot
 - The bot pulls its configuration settings from an external JSON file, making it easy to support multiple servers. Whenever a new member joins, the bot sends a personalized welcome message that's tailored to each server—fully customizable depending on the vibe you're going for.
 
+## Acknowledgments & Tutorials Used
+The master list of prohibited words was sourced from Zacanger.  
+Please follow their [GitHub profile](https://github.com/zacanger) and the original [repository](https://github.com/zacanger/profane-words/blob/master/words.json).   
+
+This project was inspired by the Python Discord Bot [tutorial](https://www.youtube.com/watch?v=YD_N6Ffoojw) from Tech With Tim.  
+I highly recommend checking out and supporting their [YouTube channel](https://www.youtube.com/@TechWithTim)!
+
 
 <center><img src="discord-logo.svg" width="500" height="500" alt="Discord Logo"></center>
