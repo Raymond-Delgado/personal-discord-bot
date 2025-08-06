@@ -43,4 +43,4 @@ This project was inspired by the Python Discord Bot [tutorial](https://www.youtu
 I highly recommend checking out and supporting their [YouTube channel](https://www.youtube.com/@TechWithTim)!
 
 
-<center><img src="discord-logo.svg" width="500" height="500" alt="Discord Logo"></center>
+<img src="discord-logo.svg" width="500" height="500" alt="Discord Logo" style="display: block; margin: 0 auto;">
