@@ -17,6 +17,18 @@ intents.members = True
 
 bot = commands.Bot(command_prefix='mw_', intents = intents)
 
+def load_bad_words_array():
+  try:
+    with open('bad_words.json', 'r') as read_file:
+      bw_array = json.load(read_file)
+      return bw_array
+  except FileNotFoundError:
+    print('bad_words.json not found')
+    return None
+  except json.JSONDecodeError:
+    print('Error decoding JSON from bad_words.json')
+
+
 def load_guild_index(requested_guild_id):
   g_index = 0
   try:
@@ -85,12 +97,14 @@ async def on_member_join(member):
   
 @bot.event
 async def on_message(message):
+  bad_words = load_bad_words_array()
   if message.author == bot.user:
     return
-  if 'test_bw' in message.content.lower():
-    bw_warning_msg = load_message(message.guild, 'bw_warning')
-    await message.delete()
-    await message.channel.send(f'{message.author.mention}{bw_warning_msg}')
+  for word in bad_words:
+    if word in message.content.lower():
+      bw_warning_msg = load_message(message.guild, 'bw_warning')
+      await message.delete()
+      await message.channel.send(f'{message.author.mention}{bw_warning_msg}')
   await bot.process_commands(message)
 
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)
