@@ -83,7 +83,6 @@ async def on_member_join(member):
   else:
     print(f'Something is wrong! {new_member_ch_id} is not found!')
   
-'''
 @bot.event
 async def on_message(message):
   if message.author == bot.user:
@@ -91,9 +90,7 @@ async def on_message(message):
   if 'test_bw' in message.content.lower():
     bw_warning_msg = load_message(message.guild, 'bw_warning')
     await message.delete()
-    await message.channel.send(f'{message.author.mention}, {bw_warning_msg}')
+    await message.channel.send(f'{message.author.mention}{bw_warning_msg}')
   await bot.process_commands(message)
-'''
-
 
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)
