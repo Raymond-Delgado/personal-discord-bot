@@ -1,8 +1,8 @@
-# My Personal Discord Bot 
+# My Personal Discord Bot -  Tomo-chan (友ちゃん)! 
+<img width="500" height="450" style="display: block; margin: 5px auto;" src="bot_logo.png" alt='Bot Logo'>
 
 ## About this project
 ### Overview
-<img width="500" height="450" style="float: right;" src="bot_logo.png">
 This Discord bot is being developed to enhance server interactivity and streamline community management. Designed with modular features and scalability in mind, it aims to provide utility, entertainment, and robust moderation tools for both casual and professional environments.
 
 ### Core Objectives
