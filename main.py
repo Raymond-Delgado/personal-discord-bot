@@ -15,7 +15,7 @@ intents = discord.Intents.default()
 intents.message_content = True
 intents.members = True
 
-bot = commands.Bot(command_prefix='mw_', intents = intents)
+bot = commands.Bot(command_prefix='tc_', intents = intents)
 
 def load_bad_words_array():
   try:
@@ -44,12 +44,15 @@ def load_guild_index(requested_guild_id):
   except json.JSONDecodeError:
     print('Error decoding JSON from server_ids.json')
 
-def load_channel_id(requested_guild_id, requested_channel_id):
+def load_id(requested_guild_id, requested_id, requested_id_category):
   g_index = load_guild_index(requested_guild_id)
   try:
     with open('server_ids.json', 'r') as read_file:
       ids_data = json.load(read_file)
-      return g_index, ids_data[g_index]["channels"][requested_channel_id]
+      if requested_id_category == 'channel':
+        return g_index, ids_data[g_index]["channels"][requested_id]
+      elif requested_id_category == 'role':
+        return g_index, ids_data[g_index]["roles"][requested_id]
   except FileNotFoundError:
     print('server_ids.json not found')
     return None
@@ -81,13 +84,16 @@ async def on_ready():
       print(f'Guild ID: {guild.id}')
     print(bot.guilds[0])
     first_guild_id = bot.guilds[0]
-    x = load_channel_id(first_guild_id,"new_member_ch")
+    print(load_guild_index(first_guild_id))
+    x = load_id(first_guild_id,"new_member_ch","channel")
+    y = load_id(first_guild_id, 'admin', 'role')
     print(f'New member channel: {x}')
+    print(f'Admin role: {y}')
     
 
 @bot.event
 async def on_member_join(member):
-  server_index, new_member_ch_id = load_channel_id(member.guild, "new_member_ch")
+  server_index, new_member_ch_id = load_id(member.guild, "new_member_ch", "channel")
   new_mem = bot.get_channel(new_member_ch_id)
   if new_mem:
     welcome_message = load_message(server_index, 'welcome')
@@ -106,5 +112,6 @@ async def on_message(message):
       await message.delete()
       await message.channel.send(f'{message.author.mention}{bw_warning_msg}')
   await bot.process_commands(message)
+
 
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)
