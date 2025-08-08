@@ -35,6 +35,7 @@ Currently in active development and being tested within a dedicated "third space
 
 ## Quick Facts about my bot
 - The bot pulls its configuration settings from an external JSON file, making it easy to support multiple servers. Whenever a new member joins, the bot sends a personalized welcome message that's tailored to each server—fully customizable depending on the vibe you're going for.
+- The bot is equipped to detect and automatically delete any messages containing over 2,000 banned words and phrases.
 
 ## Acknowledgments & Tutorials Used
 - Artwork associated with this bot was generated using AI tools.  
