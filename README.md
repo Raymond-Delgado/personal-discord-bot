@@ -1,5 +1,5 @@
 # My Personal Discord Bot -  Tomo-chan (友ちゃん)! 
-<img width="500" height="450" style="display: block; margin: 5px auto;" src="bot_logo.png" alt='Bot Logo'>
+<img width="500" height="450" style="display: block; margin: 5px auto;" src="tomo-chan.png" alt='Bot Logo'>
 
 ## About this project
 ### Overview
