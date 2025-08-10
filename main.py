@@ -52,7 +52,7 @@ def load_id(requested_guild_id, requested_id, requested_id_category):
       if requested_id_category == 'channel':
         return g_index, ids_data[g_index]["channels"][requested_id]
       elif requested_id_category == 'role':
-        return g_index, ids_data[g_index]["roles"][requested_id]
+        return ids_data[g_index]["roles"][requested_id]
   except FileNotFoundError:
     print('server_ids.json not found')
     return None
@@ -103,11 +103,25 @@ async def on_member_join(member):
   
 @bot.event
 async def on_message(message):
+  guild = message.guild
   bad_words = load_bad_words_array()
+  admin_role_id = load_id(message.guild, 'admin', 'role')
+  admin_role = discord.utils.get(guild.roles, id = admin_role_id)
   if message.author == bot.user:
     return
   for word in bad_words:
     if word in message.content.lower():
+      for member in guild.members:
+        if admin_role in member.roles:
+          try:
+            if member.dm_channel is None:
+              await member.create_dm()
+            await member.dm_channel.send(f'A message from {message.author} was flagged and deleted \n- Message content: {message.content}\n- Message sent at: {message.created_at}')
+          except discord.Forbidden:
+            await message.channel.send(f'{member.mention}, I was unable to send you a DM. Please check your DM settings for your account')
+            print(f'Could not send message to {member.name}. (DMs disabled or blocked)')
+          except Exception as e:
+            print(f'Error sending message to {member.name}: {e}')
       bw_warning_msg = load_message(message.guild, 'bw_warning')
       await message.delete()
       await message.channel.send(f'{message.author.mention}{bw_warning_msg}')
