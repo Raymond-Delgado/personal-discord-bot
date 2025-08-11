@@ -133,6 +133,24 @@ async def commands(ctx):
 Hello {ctx.author.mention}!
 Here is a list of the commands that you can use:
 - tc_commands: Lists the commands that are available.
+- tc_assign <role_name>: Assigns you the specified role.
+  - Please use underscores(\_) instead of spaces (e.g. 'anime fan' --> 'anime_fan')
+  - Example tc_assign fan will assign you the fan role 
 ''')
+
+@bot.command()
+async def assign(ctx, requested_role: str):
+  try:
+    requested_role_id = load_id(ctx.guild, requested_role.lower(), 'role')
+    role_to_add = discord.utils.get(ctx.guild.roles, id=requested_role_id)
+    if role_to_add:
+      await ctx.author.add_roles(role_to_add)
+      await ctx.send(f'{ctx.author.mention}, I have added you to {role_to_add.name}')
+    else:
+      await ctx.send(f'{requested_role} was not found')
+  except discord.Forbidden:
+    await ctx.send(f'I do not have permission to assign that role.')
+  except Exception as e:
+    await ctx.send(f'An error occured: {e}')
 
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)
