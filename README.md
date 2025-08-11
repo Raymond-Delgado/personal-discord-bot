@@ -3,7 +3,8 @@
 
 ## About this project
 ### Overview
-This Discord bot is being developed to enhance server interactivity and streamline community management. Designed with modular features and scalability in mind, it aims to provide utility, entertainment, and robust moderation tools for both casual and professional environments.
+This Discord bot is being developed to enhance server interactivity and streamline community management. Designed with modular features and scalability in mind, it aims to provide utility, entertainment, and robust moderation tools for both casual and professional environments.  
+Click [here](./commands.md) to view the full list of commands the bot can perform
 
 ### Core Objectives
 1. Facilitate Engagement: Introduce interactive commands to foster active participation.
