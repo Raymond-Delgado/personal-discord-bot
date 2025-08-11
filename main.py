@@ -136,6 +136,9 @@ Here is a list of the commands that you can use:
 - tc_assign <role_name>: Assigns you the specified role.
   - Please use underscores(\_) instead of spaces (e.g. 'anime fan' --> 'anime_fan')
   - Example tc_assign fan will assign you the fan role 
+- tc_remove <role_name>: Removes you from the specified role.
+  - Please use underscores(\_) instead of spaces (e.g. 'anime fan' --> 'anime_fan')
+  - Example tc_remove fan will remove you from the fan role 
 ''')
 
 @bot.command()
@@ -150,6 +153,21 @@ async def assign(ctx, requested_role: str):
       await ctx.send(f'{requested_role} was not found')
   except discord.Forbidden:
     await ctx.send(f'I do not have permission to assign that role.')
+  except Exception as e:
+    await ctx.send(f'An error occured: {e}')
+
+@bot.command()
+async def remove(ctx, requested_role: str):
+  try:
+    requested_role_id = load_id(ctx.guild, requested_role.lower(), 'role')
+    role_to_remove= discord.utils.get(ctx.guild.roles, id=requested_role_id)
+    if role_to_remove:
+      await ctx.author.remove_roles(role_to_remove)
+      await ctx.send(f'{ctx.author.mention}, I have removed you from {role_to_remove.name}')
+    else:
+      await ctx.send(f'{requested_role} was not found')
+  except discord.Forbidden:
+    await ctx.send(f'I do not have permission to remove you from that role.')
   except Exception as e:
     await ctx.send(f'An error occured: {e}')
 
