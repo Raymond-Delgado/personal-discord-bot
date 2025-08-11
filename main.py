@@ -127,5 +127,12 @@ async def on_message(message):
       await message.channel.send(f'{message.author.mention}{bw_warning_msg}')
   await bot.process_commands(message)
 
+@bot.command()
+async def commands(ctx):
+  await ctx.send(f'''
+Hello {ctx.author.mention}!
+Here is a list of the commands that you can use:
+- tc_commands: Lists the commands that are available.
+''')
 
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)
