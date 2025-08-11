@@ -26,11 +26,12 @@ Currently in active development and being tested within a dedicated "third space
 ### Milestones
 - Get the Discord Bot online ✅
 - Add functionality
+  - Integrate a large language model into the Discord bot to enable intelligent, conversational responses to user inquiries
   - Access MTG API to get real time data on cards
   - Notify users about new posts on my tech IG account
   - Assist with rule enforcement
   - Automate wehcloming new members ✅
-  - Grant users roles
+  - Grant/Remove users roles ✅
   - Organize users' request via ticketing system
 - Host the bot on multiple discord servers
 
