@@ -4,6 +4,8 @@ import logging
 from dotenv import load_dotenv
 import os
 import json
+from ollama import chat
+from ollama import ChatResponse
 
 load_dotenv()
 token = os.getenv('DISCORD_TOKEN')
@@ -170,5 +172,21 @@ async def remove(ctx, requested_role: str):
     await ctx.send(f'I do not have permission to remove you from that role.')
   except Exception as e:
     await ctx.send(f'An error occured: {e}')
+
+@bot.command()
+async def ask(ctx, *, message):
+  print(message)
+  print('-----------------------')
+  response: ChatResponse = chat(model='llama3', messages=[
+    {
+      'role': 'system',
+      'content': 'You will provide answers to users\' questions in 750 characters or less. End the answer with - T.C. on a new line'
+    },
+    {
+    'role': 'user',
+    'content': message,
+   },
+ ])
+  await ctx.send(response.message.content)
 
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)
