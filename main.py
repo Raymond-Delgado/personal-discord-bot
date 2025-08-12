@@ -180,7 +180,7 @@ async def ask(ctx, *, message):
   response: ChatResponse = chat(model='llama3', messages=[
     {
       'role': 'system',
-      'content': 'You will provide answers to users\' questions in 750 characters or less. End the answer with - T.C. on a new line'
+      'content': 'You will provide answers to users\' questions in 1000 characters or less. End the answer with - T.C. on a new line'
     },
     {
     'role': 'user',
